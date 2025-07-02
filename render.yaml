@@ -1,9 +1,12 @@
 services:
   - type: web
-    name: predictor-ml
+    name: heart-attack-predictor
     env: python
+    plan: free
+    branch: master
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app
+    pythonVersion: 3.11.9
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.11.9
+      - key: FLASK_ENV
+        value: production

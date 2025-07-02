@@ -1,84 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Health</title>
-    <link rel="stylesheet" href="/static/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Heart Attack Predictor</title>
+
+  <!-- MUI Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(18px) saturate(180%);
+      border-radius: 20px;
+      padding: 30px 40px;
+      width: 94%;
+      max-width: 1000px;
+      box-shadow: 0 8px 40px rgba(255, 255, 255, 0.1);
+      color: #fff;
+      overflow: auto;
+    }
+
+    .title {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: bold;
+      background: linear-gradient(90deg, #ff4e50, #f9d423);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 25px;
+    }
+
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .field,
+    .radio-group {
+      flex: 1 1 30%;
+      display: flex;
+      flex-direction: column;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 14px 16px;
+      border-radius: 12px;
+      backdrop-filter: blur(5px);
+    }
+
+    .field input[type="text"] {
+      margin-top: 6px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: none;
+      font-size: 15px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    .field input::placeholder {
+      color: #ccc;
+    }
+
+    .field input:focus {
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 0 2px #f9d423;
+    }
+
+    .field label,
+    .radio-group label:first-child {
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: #f9f9f9;
+    }
+
+    .radio-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .radio-options label {
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    button[type="submit"] {
+      margin-top: 25px;
+      width: 100%;
+      padding: 16px;
+      font-size: 17px;
+      background: linear-gradient(90deg, #ff4e50, #f9d423);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    button[type="submit"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(249, 212, 35, 0.4);
+    }
+
+    @media (max-width: 768px) {
+      .field, .radio-group {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <div class="card">
+    <div class="title">Heart Attack Predictor</div>
 
-    <h1 class="head">Heart Attack Predictor</h1>
+    <form action="/predict" method="POST">
 
+      <div class="field">
+        <label>Age</label>
+        <input type="text" name="Age" placeholder="Enter Age" required />
+      </div>
 
-    <div class="container">
+      <div class="field">
+        <label>Creatinine Phosphokinase</label>
+        <input type="text" name="Creatinine_phosphokinase" placeholder="mg/L" required />
+      </div>
 
-        <form action='/predict' method="POST" >
+      <div class="field">
+        <label>Ejection Fraction</label>
+        <input type="text" name="Ejection_fraction" placeholder="%" required />
+      </div>
 
-            <label for="Age" class="ok">Age:</label>
-            <input type="text" name="Age" class="ok" id="Age" value="" required>
+      <div class="field">
+        <label>Platelets</label>
+        <input type="text" name="Platelets" placeholder="k/mL" required />
+      </div>
 
-            <legend class="ok">Do You Have Anaemia?</legend>
-            <label for="yes" class="sex">Yes</label>
-            <input type="radio" name="Anaemia" id="yes" value="1" required>
-            <label for="no" class="sex">NO</label>
-            <input type="radio" name="Anaemia" id="no" value="0" required>
+      <div class="field">
+        <label>Serum Creatinine</label>
+        <input type="text" name="Serum_creatinine" placeholder="mg/dL" required />
+      </div>
 
+      <div class="field">
+        <label>Serum Sodium</label>
+        <input type="text" name="Serum_sodium" placeholder="mmol/L" required />
+      </div>
 
-            <label for="Creatinine_phosphokinase" class="ok">Creatinine_phosphokinase:</label>
-            <input type="text" value="" name="Creatinine_phosphokinase" id="Creatinine_phosphokinase" class="ok" required> 
+      <div class="field">
+        <label>Follow-up Period</label>
+        <input type="text" name="fup" placeholder="Days" required />
+      </div>
 
-            <legend class="ok">Do You Have Diabetes:</legend>
-            <label for="yes" class="sex">Yes</label>
-            <input type="radio" name="Diabetes" id="yes" value="1" required>
-            <label for="no" class="sex">NO</label>
-            <input type="radio" name="Diabetes" id="no" value="0" required>
+      <!-- Radio groups as matching blocks -->
+      <div class="radio-group">
+        <label>Do You Have Anaemia?</label>
+        <div class="radio-options">
+          <label><input type="radio" name="Anaemia" value="1" required /> Yes</label>
+          <label><input type="radio" name="Anaemia" value="0" /> No</label>
+        </div>
+      </div>
 
+      <div class="radio-group">
+        <label>Do You Have Diabetes?</label>
+        <div class="radio-options">
+          <label><input type="radio" name="Diabetes" value="1" required /> Yes</label>
+          <label><input type="radio" name="Diabetes" value="0" /> No</label>
+        </div>
+      </div>
 
-            <label for="Ejection_fraction" class="ok">Ejection_fraction:</label>
-            <input type="text" name="Ejection_fraction" id="Ejection_fraction" class="ok" required>
+      <div class="radio-group">
+        <label>Do You Have High Blood Pressure?</label>
+        <div class="radio-options">
+          <label><input type="radio" name="High_blood_pressure" value="1" required /> Yes</label>
+          <label><input type="radio" name="High_blood_pressure" value="0" /> No</label>
+        </div>
+      </div>
 
-            
-            
-            <legend class="ok">Do You Have High_blood_pressure:</legend>
-            <label for="Yes" class="sex">Yes</label>
-            <input type="radio" name="High_blood_pressure" id="Yes" value="1" required >
-            <label for="No" class="sex">No</label>
-            <input type="radio" name="High_blood_pressure" id="No" value="0" required>
-          
-            <label for="Platelets" class="ok">Platelets:</label>
-            <input type="text" name="Platelets" id="Platelets" class="ok" required>
+      <div class="radio-group">
+        <label>Sex</label>
+        <div class="radio-options">
+          <label><input type="radio" name="sex" value="1" required /> Male</label>
+          <label><input type="radio" name="sex" value="0" /> Female</label>
+          <label><input type="radio" name="sex" value="0" /> Other</label>
+        </div>
+      </div>
 
-            <label for="Serum_creatinine" class="ok">Serum_creatinine:</label>
-            <input type="text" name="Serum_creatinine" id="Serum_creatinine" class="ok" required>
+      <div class="radio-group">
+        <label>Do You Smoke?</label>
+        <div class="radio-options">
+          <label><input type="radio" name="smoke" value="1" required /> Yes</label>
+          <label><input type="radio" name="smoke" value="0" /> No</label>
+        </div>
+      </div>
 
-            <label for="Serum_sodium" class="ok">Serum_sodium:</label>
-            <input type="text" name="Serum_sodium" id="Serum_sodium" class="ok" required>
-
-            <legend class="ok">Sex :</legend>
-            <label for="male" class="sex">Male</label>
-            <input type="radio" name="sex" id="male" value="1" required>
-            <label for="female" class="sex">Female</label>
-            <input type="radio" value="0" name="sex" id="female" required>
-            <label for="other" class="sex">Others</label>
-            <input type="radio" name="sex" id="other" value="0" required>
-
-
-            <legend class="ok">Do You Smoke?</legend>
-            <label for="yes" class="sex">Yes</label>
-            <input type="radio" name="smoke" id="yes" value="1" required>
-            <label for="no" class="sex">NO</label>
-            <input type="radio" name="smoke" id="no" value="0" required> 
-
-            <legend class="ok">Follow-up period:</legend>
-            <input type="text" name="fup" id="" class="ok" required>
-            
-            <button type="submit" class="ok">Predict Now</button>
-        </form>
-    </div>
-  
+      <button type="submit">Predict Now</button>
+    </form>
+  </div>
 </body>
-
 </html>
