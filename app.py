@@ -17,7 +17,7 @@ def predict():
     prediction = model.predict(final)
     output = format(prediction[0])
     
- 
+
 
     if output == str("1"):
         return render_template('pop.html')

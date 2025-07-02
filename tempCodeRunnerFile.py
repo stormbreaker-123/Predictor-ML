@@ -1,2 +1,2 @@
-if __name__ == '__main__':
-#     app.run(debug=True)
+
+    float_features = [float (x) for x in request.form.values()] 
