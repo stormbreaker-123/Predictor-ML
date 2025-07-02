@@ -32,9 +32,11 @@
       padding: 30px 40px;
       width: 94%;
       max-width: 1000px;
+
+      /* Removed max-height and overflow-y from here */
+
       box-shadow: 0 8px 40px rgba(255, 255, 255, 0.1);
       color: #fff;
-      overflow: auto;
     }
 
     .title {
@@ -108,6 +110,7 @@
 
     button[type="submit"] {
       margin-top: 25px;
+      margin-bottom: 20px;
       width: 100%;
       padding: 16px;
       font-size: 17px;
@@ -125,9 +128,27 @@
       box-shadow: 0 4px 20px rgba(249, 212, 35, 0.4);
     }
 
+    /* Scroll and max-height only on small devices */
     @media (max-width: 768px) {
+      .card {
+        max-height: 95vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      form {
+        flex-direction: column;
+      }
+
       .field, .radio-group {
         flex: 1 1 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .field input[type="text"] {
+        font-size: 18px;
+        padding: 12px 16px;
       }
     }
   </style>
@@ -174,7 +195,7 @@
         <input type="text" name="fup" placeholder="Days" required />
       </div>
 
-      <!-- Radio groups as matching blocks -->
+      <!-- Radio groups -->
       <div class="radio-group">
         <label>Do You Have Anaemia?</label>
         <div class="radio-options">
